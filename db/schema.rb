@@ -17,10 +17,10 @@ ActiveRecord::Schema.define(version: 2020_11_26_192112) do
   enable_extension "plpgsql"
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name"
-    t.date "birthday_date"
-    t.string "email"
-    t.string "password"
+    t.string "name", null: false
+    t.date "birthday_date", null: false
+    t.string "email", null: false
+    t.string "password", null: false
     t.string "description"
     t.string "avatar"
     t.string "phone_number", limit: 13

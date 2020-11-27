@@ -9,22 +9,20 @@ default: &default
   encoding: unicode
   timeout: 5000
   host: <%= ENV['POSTGRES_HOST'] || 'localhost' %>
-  port: <%= ENV['POSTGRES_PORT'] || '5432' %> 
   username: <%= ENV['POSTGRES_USERNAME'] %>
   password: <%= ENV['POSTGRES_PASSWORD']%>
+  database: <%= ENV['POSTGRES_DATABASE'] %>
   
 development:
   <<: *default
-  database: <%= ENV['POSTGRES_DEV_DATABASE'] %>
+  port: <%= ENV['POSTGRES_PORT'] || '5432' %> 
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  adapter: mysqlite3
-  database: db/test.sqlite3
-  pool: 5
-  timeout: 5000
+  <<: *default
+  port: <%= ENV['T_POSTGRES_PORT'] || '5432' %> 
 
 production:
   <<: *default

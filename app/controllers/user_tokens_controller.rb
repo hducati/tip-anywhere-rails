@@ -1,0 +1,2 @@
+class UserTokensController < ApplicationController
+end

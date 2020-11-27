@@ -5,7 +5,7 @@ RSpec.describe 'Users API', type: :request do
   let(:user_id) { users.first.id }
 
   describe 'GET /users' do
-    before { get, '/users' }
+    before { get '/users' }
 
     it 'returns users' do
       expect(json).not_to be_empty
@@ -18,7 +18,7 @@ RSpec.describe 'Users API', type: :request do
   end
 
   describe 'GET /users/:id' do
-    before { get, '/users/#{user_id}'}
+    before { get '/users/#{user_id}'}
 
     context 'when the record exists' do
       it 'returns the user' do
@@ -52,7 +52,7 @@ RSpec.describe 'Users API', type: :request do
       password: '1231232131'}}
 
     context 'when the request is valid' do
-      before { post, '/users', params: valid_attributes}
+      before { post '/users', params: valid_attributes}
 
       it 'creates a new user' do
         expect(json['name']).to eq('Henrique Ducati')

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_27_144012) do
+ActiveRecord::Schema.define(version: 2020_11_30_190527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 2020_11_27_144012) do
     t.string "name", null: false
     t.date "birthday_date", null: false
     t.string "email", null: false
-    t.string "password", null: false
+    t.string "password_digest", null: false
     t.string "description"
     t.string "avatar"
     t.string "phone_number", limit: 13

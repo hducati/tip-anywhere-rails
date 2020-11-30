@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Users API', type: :request do
-  let!(:users) {create_list(:user, 10) }
+  let!(:users) { create_list(:user, 10) }
   let(:user_id) { users.first.id }
 
   describe 'GET /users' do
     before { get '/users' }
 
     it 'returns users' do
-      expect(json).not_to be_empty
-      expect(json.size).to eq(10)
+      expect(json_parse).not_to be_empty
+      expect(json_parse.size).to eq(10)
     end
 
     it 'return status code 200' do
@@ -18,12 +18,12 @@ RSpec.describe 'Users API', type: :request do
   end
 
   describe 'GET /users/:id' do
-    before { get '/users/#{user_id}'}
+    before { get "/users/#{user_id}"}
 
     context 'when the record exists' do
       it 'returns the user' do
-        expect(json).not_to be_empty
-        expect(json['id']).to eq(user_id)
+        expect(json_parse).not_to be_empty
+        expect(json_parse['id']).to eq(user_id)
       end
 
       it 'return status code 200' do
@@ -55,10 +55,10 @@ RSpec.describe 'Users API', type: :request do
       before { post '/users', params: valid_attributes}
 
       it 'creates a new user' do
-        expect(json['name']).to eq('Henrique Ducati')
-        expect(json['birthday_date']).to eq('2018-04-04')
-        expect(json['email']).to eq('henrique@gmail.com')
-        expect(json['password']).to eq('1231232131')
+        expect(json_parse['name']).to eq('Henrique Ducati')
+        expect(json_parse['birthday_date']).to eq('2018-04-04')
+        expect(json_parse['email']).to eq('henrique@gmail.com')
+        expect(json_parse['password']).to eq('1231232131')
       end
 
       it 'return status code 201' do
@@ -78,7 +78,7 @@ RSpec.describe 'Users API', type: :request do
 
         it 'returns a validation failure message' do
           expect(response.body).to match(
-            /Validation failed: birthday_date can't be blank/)
+            /Validation failed: Birthday date can't be blank/)
         end
     end
   end
@@ -87,7 +87,7 @@ RSpec.describe 'Users API', type: :request do
     let(:valid_attributes) { { name: 'Henrique Ducati'} }
     
     context 'when the record exists' do
-      before { put 'users/#{user_id}', params: valid_attributes}
+      before { put "/users/#{user_id}", params: valid_attributes}
 
       it 'updates the record' do
         expect(response.body).to be_empty
@@ -100,9 +100,9 @@ RSpec.describe 'Users API', type: :request do
   end
 
   describe 'DELETE /users/:id' do
-    before { delete '/users/#{user_id}' }
+    before { delete "/users/#{user_id}" }
 
-    it 'returns staus code 204' do
+    it 'returns status code 204' do
       expect(response).to have_http_status(204)
     end
   end

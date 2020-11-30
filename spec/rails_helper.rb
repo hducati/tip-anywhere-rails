@@ -25,7 +25,8 @@ RSpec.configure do |config|
 
   config.use_transactional_fixtures = true
 
-  config.include RequestSpecHelper, type: :request
+  config.include RequestSpecHelper
+  config.include ControllerSpecHelper
 
   config.infer_spec_type_from_file_location!
 

@@ -5,7 +5,7 @@ class AuthenticateUser
   end
 
   def execute
-  JsonWebToken.encode(user_id: user_credentials.id) if user_credentials
+    return [user, token] if user_credentials
   end
 
   private
@@ -16,14 +16,10 @@ class AuthenticateUser
   def user_credentials
     user = User.find_by(email: email)
 
-    if !user 
-      raise(
-        ExceptionHandler::AuthenticationError, 
-        AppError.error_message('Wrong password/email combination')
-      )
-    end
+    token = JsonWebToken.encode(user_id: user.id) 
+      if user && user.authenticate(password)
 
-    return user if user && user.authenticate(password)
+    return [user, token] if token
 
     raise(
       ExceptionHandler::AuthenticationError, 

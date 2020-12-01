@@ -1,5 +1,5 @@
 class CreateUserService
-  def initialize(params={})
+  def initialize(params = {})
     @user_params = params
   end
 
@@ -19,8 +19,7 @@ class CreateUserService
       )
     end
 
-    user = User.create!(@user_params)
+    return user if User.create!(user_params)
 
-    return user
   end
 end

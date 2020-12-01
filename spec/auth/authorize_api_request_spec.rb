@@ -8,10 +8,10 @@ RSpec.describe AuthorizeApiRequest do
   subject(:invalid_request_obj) { described_class.new({}) }
   subject(:request_obj) { described_class.new(header)}
 
-  describe '#call' do
+  describe '#execute' do
     context 'when valid request' do
       it 'returns user object' do
-        result = request_obj.call
+        result = request_obj.execute
         expect(result[:user]).to eq(user)
       end
     end
@@ -19,7 +19,7 @@ RSpec.describe AuthorizeApiRequest do
     context 'when invalid request' do
       context 'when missing token' do
         it 'raises a MissingToken error' do
-          expect { invalid_request_obj.call }
+          expect { invalid_request_obj.execute }
             .to raise_error(ExceptionHandler::MissingToken, 'Missing token')
         end
       end

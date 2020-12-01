@@ -1,9 +1,9 @@
 class UserTokensController < ApplicationController
   def create
-    [user, token] = AuthenticateUser.new(auth_params[:email], 
+    user_token_object = AuthenticateUser.new(auth_params[:email], 
       auth_params[:password]).execute
 
-    json_response([user: user, token: token], :created)
+    json_response(user_token_object, :created)
   end
 
   private

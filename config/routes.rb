@@ -3,4 +3,6 @@ Rails.application.routes.draw do
 
   post 'signup', to: 'users#create'
   get 'profile', to: 'users#show'
+
+  post 'sessions', to: 'usertokens#create'
 end

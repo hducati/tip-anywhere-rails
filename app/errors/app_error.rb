@@ -1,4 +1,8 @@
-class Message
+class AppError
+  def error_message(message)
+    "#{message}"
+  end
+
   def self.not_found(record = 'record')
     "Sorry, #{record} not found."
   end
@@ -29,5 +33,9 @@ class Message
 
   def self.expired_token
     'Sorry, your token has expired. Please login to continue'
+  end
+
+  def self.email_found
+    'E-mail address already used'
   end
 end

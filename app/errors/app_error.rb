@@ -1,5 +1,5 @@
 class AppError
-  def error_message(message)
+  def self.error_message(message)
     "#{message}"
   end
 

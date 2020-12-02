@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AuthenticateUser do
+RSpec.describe AuthenticateUserService do
   let(:user) { create(:user) }
 
   subject(:valid_auth_obj) { described_class.new(user.email, user.password) }
@@ -8,10 +8,9 @@ RSpec.describe AuthenticateUser do
 
   describe '#execute' do
     context 'when valid credentials' do
-      it'return an auth token and a user object' do
-        [user_obj, token] = valid_auth_obj.execute
+      it 'return an auth token and a user object' do
+        token = valid_auth_obj.execute
         expect(token).not_to be_nil
-        expect(user_obj).not_to be_nil
       end
     end
 
@@ -20,7 +19,7 @@ RSpec.describe AuthenticateUser do
         expect { invalid_auth_obj.execute }
           .to raise_error(  
             ExceptionHandler::AuthenticationError,
-            /Invalid credentials/
+            AppError.error_message('Wrong password/email combination')
           )
       end
     end

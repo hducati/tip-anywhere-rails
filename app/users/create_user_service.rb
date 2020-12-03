@@ -1,5 +1,5 @@
 class CreateUserService
-  def initialize(user_params)
+  def initialize(user_params = {})
     @name = user_params[:name]
     @birthday_date = user_params[:birthday_date]
     @email = user_params[:email]
@@ -17,18 +17,15 @@ class CreateUserService
   def create_user
     userExists = User.find_by(email: email)
 
-    puts(userExists)
-
     user = User.create!({
       name: name, birthday_date: birthday_date, email: email, 
-      password_digest: password_digest})
+      password_digest: password_digest}) if !userExists
 
-    return user if userExists && user
-
+    return user if user
+    
     raise(
-      ExceptionHandler::RecordInvalid, 
-      AppError.error_message('Email address already used')
-    )
+      ActiveRecord::RecordInvalid, 
+      AppError.error_message('Email address already in use')
+    ) if !userExists
   end
-
 end

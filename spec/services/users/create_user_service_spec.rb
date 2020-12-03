@@ -4,8 +4,7 @@ RSpec.describe CreateUserService do
   let(:user) { create(:user) }
   let(:headers) { valid_headers.except('Authorization') }
 
-  subject(:valid_object) { described_class.new(
-    user.name, user.birthday_date, user.email, user.password_digest) }
+  subject(:valid_object) { described_class.new(user) }
     
   subject(:invalid_object) { described_class.new(
     'foo', 'bar', 'foo', 'bar') }

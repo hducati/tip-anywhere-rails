@@ -15,17 +15,12 @@ class CreateUserService
   private
 
   def create_user
-    userExists = User.find_by(email: email)
-
     user = User.create!({
       name: name, birthday_date: birthday_date, email: email, 
-      password_digest: password_digest}) if !userExists
+      password_digest: password_digest})
 
     return user if user
-    
-    raise(
-      ActiveRecord::RecordInvalid, 
-      AppError.error_message('Email address already in use')
-    ) if !userExists
+
+  
   end
 end

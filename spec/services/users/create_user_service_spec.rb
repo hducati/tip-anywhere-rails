@@ -25,11 +25,9 @@ RSpec.describe CreateUserService do
     context 'when invalid request' do
       it 'should not be able to create a user with a existing email address' do
         checkUser = valid_object.execute
-        newUser = valid_object.execute
-
-        expect { newUser }.to raise_error(
-          ActiveRecord::RecordInvalid, 
-          /Email address/)
+        expect { valid_object.execute }.to raise_error(
+          ActiveRecord::RecordInvalid
+        )
       end
       
       context 'when invalid user' do

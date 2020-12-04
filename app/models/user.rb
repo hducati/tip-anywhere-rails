@@ -4,7 +4,7 @@ class User < ApplicationRecord
 
   has_many :user_tokens, dependent: :destroy
 
-  validates :email, confirmation: true, uniqueness: true
-
   validates_presence_of :name, :birthday_date, :email, :password_digest
+
+  validates :email, confirmation: true, uniqueness: true
 end

@@ -52,7 +52,7 @@ RSpec.describe AuthorizeApiRequest do
         end
       end
 
-      context 'fake token' do
+      context 'when fake token' do
         subject(:invalid_request_obj) { described_class.new(header) }
 
         let(:header) { { 'Authorization' => 'foobar' } }

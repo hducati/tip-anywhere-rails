@@ -8,5 +8,19 @@ require:
 AllCops:
   DisplayCopNames: true
   Exclude:
+    - 'db/**/*'
+    - 'lib/**/*'
+    - 'bin/**/*'
+    - 'config/**/*'
+    - 'vendor/**/*'
     - 'tmp/**/*'
     - 'spec/fixtures/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - Rakefile
+    - '**/*.rake'
+    - spec/**/*.rb
+
+Rails:
+  Enabled: true

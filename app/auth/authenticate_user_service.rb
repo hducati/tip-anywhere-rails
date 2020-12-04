@@ -7,7 +7,7 @@ class AuthenticateUserService
   end
 
   def execute
-    token = JsonWebToken.encode(user_id: user.id) if user_credentials
+    JsonWebToken.encode(user_id: user.id) if user_credentials
   end
 
   private

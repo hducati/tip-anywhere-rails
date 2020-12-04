@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  it { should have_many(:user_tokens).dependent(:destroy)}
-  it { should validate_presence_of(:name) }
-  it { should validate_presence_of(:birthday_date) }
-  it { should validate_presence_of(:email) }
-  it { should validate_presence_of(:password_digest) }
-  it { should validate_uniqueness_of(:email)}
+  it { is_expected.to have_many(:user_tokens).dependent(:destroy) }
+  it { is_expected.to validate_presence_of(:name) }
+  it { is_expected.to validate_presence_of(:birthday_date) }
+  it { is_expected.to validate_presence_of(:email) }
+  it { is_expected.to validate_presence_of(:password_digest) }
+  it { is_expected.to validate_uniqueness_of(:email) }
 end

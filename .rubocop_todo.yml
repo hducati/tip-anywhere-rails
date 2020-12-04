@@ -1,2 +1,4 @@
 Metrics/ClassLength:
   Max: 106
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context']

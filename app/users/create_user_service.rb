@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateUserService
   def initialize(user_params = {})
     @name = user_params[:name]
@@ -16,11 +18,10 @@ class CreateUserService
 
   def create_user
     user = User.create!({
-      name: name, birthday_date: birthday_date, email: email, 
-      password_digest: password_digest})
+                          name: name, birthday_date: birthday_date, email: email,
+                          password_digest: password_digest
+                        })
 
     return user if user
-
-  
   end
 end

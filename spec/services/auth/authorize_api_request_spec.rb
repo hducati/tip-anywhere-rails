@@ -1,12 +1,15 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe AuthorizeApiRequest do
+  subject(:request_obj) { described_class.new(header) }
+
   let(:user) { create(:user) }
 
   let(:header) { { 'Authorization' => token_generator(user.id) } }
 
-  subject(:invalid_request_obj) { described_class.new({}) }
-  subject(:request_obj) { described_class.new(header)}
+  let(:invalid_request_obj) { described_class.new({}) }
 
   describe '#execute' do
     context 'when valid request' do
@@ -36,8 +39,9 @@ RSpec.describe AuthorizeApiRequest do
       end
 
       context 'when token is expired' do
-        let(:header) { { 'Authorization' => expired_token_generator(user.id)} }
         subject(:request_obj) { described_class.new(header) }
+
+        let(:header) { { 'Authorization' => expired_token_generator(user.id) } }
 
         it 'raises ExceptionHandler::ExpiredSignature error' do
           expect { request_obj.execute }
@@ -49,8 +53,9 @@ RSpec.describe AuthorizeApiRequest do
       end
 
       context 'fake token' do
-        let(:header) { { 'Authorization' => 'foobar' } }
         subject(:invalid_request_obj) { described_class.new(header) }
+
+        let(:header) { { 'Authorization' => 'foobar' } }
 
         it 'handles JWT::DecodeError' do
           expect { invalid_request_obj.execute }

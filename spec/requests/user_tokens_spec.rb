@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'UserTokens', type: :request do
-  describe ('POST /sessions') do
+  describe('POST /sessions') do
     let!(:user) { create(:user) }
     let(:headers) { valid_headers.except('Authorization') }
 
@@ -20,7 +22,7 @@ RSpec.describe 'UserTokens', type: :request do
     end
 
     context 'when request is valid' do
-      before { post '/sessions', params: valid_credentials, headers: headers}
+      before { post '/sessions', params: valid_credentials, headers: headers }
 
       it 'returns an authentication token' do
         expect(json['token']).not_to be_nil
@@ -28,13 +30,11 @@ RSpec.describe 'UserTokens', type: :request do
     end
 
     context 'when request is invalid' do
-      before { post '/sessions', params: invalid_credentials, headers: headers}
+      before { post '/sessions', params: invalid_credentials, headers: headers }
 
       it 'returns a failure message' do
         expect(json['message']).to match(/Invalid credentials/)
       end
     end
-
   end
-
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AuthenticateUserService
   def initialize(email, password)
     @email = email
@@ -16,10 +18,10 @@ class AuthenticateUserService
   def user_credentials
     user = User.find_by(email: email)
 
-    return user if user && user.authenticate(password)
+    return user if user&.authenticate(password)
 
     raise(
-      ExceptionHandler::AuthenticationError, 
+      ExceptionHandler::AuthenticationError,
       AppError.error_message('Wrong password/email combination')
     )
   end

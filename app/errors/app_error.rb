@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class AppError
   def self.error_message(message)
-    "#{message}"
+    message.to_s
   end
 
   def self.not_found(record = 'record')

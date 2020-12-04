@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class UserToken < ApplicationRecord
   belongs_to :user
 
-  validates_presence_of :token
+  validates :token, presence: true
 end

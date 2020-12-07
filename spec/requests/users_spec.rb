@@ -50,7 +50,7 @@ RSpec.describe 'Users API', type: :request do
     end
   end
 
-  describe 'POST /users' do
+  describe 'POST /signup' do
     let(:valid_attributes) do
       {
         name: 'Henrique Ducati',
@@ -61,7 +61,7 @@ RSpec.describe 'Users API', type: :request do
     end
 
     context 'when the request is valid' do
-      before { post '/users', params: valid_attributes }
+      before { post '/signup', params: valid_attributes.to_json }
 
       it 'creates a new user' do
         expect(json_parse).to have_attributes(

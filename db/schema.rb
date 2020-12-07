@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,33 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_201_130_190_527) do
+ActiveRecord::Schema.define(version: 2020_12_07_144634) do
+
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'pgcrypto'
-  enable_extension 'plpgsql'
+  enable_extension "pgcrypto"
+  enable_extension "plpgsql"
 
-  create_table 'user_tokens', id: :uuid, default: -> { 'gen_random_uuid()' }, force: :cascade do |t|
-    t.uuid 'token', null: false
-    t.uuid 'user_id', null: false
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
-    t.index ['user_id'], name: 'index_user_tokens_on_user_id'
+  create_table "user_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "token", null: false
+    t.uuid "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_user_tokens_on_user_id"
   end
 
-  create_table 'users', id: :uuid, default: -> { 'gen_random_uuid()' }, force: :cascade do |t|
-    t.string 'name', null: false
-    t.date 'birthday_date', null: false
-    t.string 'email', null: false
-    t.string 'password_digest', null: false
-    t.string 'description'
-    t.string 'avatar'
-    t.string 'phone_number', limit: 13
-    t.string 'telegram'
-    t.string 'facebook'
-    t.string 'whatsapp'
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.date "birthday_date", null: false
+    t.string "email", null: false
+    t.string "password_digest", null: false
+    t.string "description"
+    t.string "avatar"
+    t.string "phone_number", limit: 13
+    t.string "telegram"
+    t.string "facebook"
+    t.string "whatsapp"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key 'user_tokens', 'users'
+  add_foreign_key "user_tokens", "users"
 end

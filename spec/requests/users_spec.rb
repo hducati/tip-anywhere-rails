@@ -9,13 +9,18 @@ RSpec.describe 'Users API', type: :request do
   describe 'GET /users' do
     before { get '/users' }
 
-    it 'returns users' do
-      expect(json_parse).not_to be_empty
-      expect(json_parse.size).to eq(10)
-    end
+    context 'when the request is valid' do
+      it 'returns users' do
+        expect(json_parse).not_to be_empty
+      end
 
-    it 'return status code 200' do
-      expect(response).to have_http_status(:ok)
+      it 'returns a size' do
+        expect(json_parse.size).to eq(10)
+      end
+
+      it 'return status code 200' do
+        expect(response).to have_http_status(:ok)
+      end
     end
   end
 
@@ -24,11 +29,10 @@ RSpec.describe 'Users API', type: :request do
 
     context 'when the record exists' do
       it 'returns the user' do
-        expect(json_parse).not_to be_empty
-        expect(json_parse['id']).to eq(user_id)
+        expect(json_parse['id']).not_to be_empty.and eq(user_id)
       end
 
-      it 'return status code 200' do
+      it 'returns status code 200' do
         expect(response).to have_http_status(:ok)
       end
     end
@@ -60,10 +64,10 @@ RSpec.describe 'Users API', type: :request do
       before { post '/users', params: valid_attributes }
 
       it 'creates a new user' do
-        expect(json_parse['name']).to eq('Henrique Ducati')
-        expect(json_parse['birthday_date']).to eq('2018-04-04')
-        expect(json_parse['email']).to eq('henrique@gmail.com')
-        expect(json_parse['password']).to eq('1231232131')
+        expect(json_parse).to have_attributes(
+          name: 'Henrique Ducati', birthday_date: '2018-04-04',
+          email: 'henrique@gmail.com', password_digest: '1231232131'
+        )
       end
 
       it 'return status code 201' do
@@ -80,13 +84,11 @@ RSpec.describe 'Users API', type: :request do
         }
       end
 
-      it 'returns status code 422' do
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
+      it { is_expected.to have_http_status(:unprocessable_entity) }
 
       it 'returns a validation failure message' do
         expect(response.body).to match(
-          /Validation failed: Birthday date can't be blank/
+          /Validation failed/
         )
       end
     end
@@ -105,14 +107,6 @@ RSpec.describe 'Users API', type: :request do
       it 'returns status code 204' do
         expect(response).to have_http_status(:no_content)
       end
-    end
-  end
-
-  describe 'DELETE /users/:id' do
-    before { delete "/users/#{user_id}" }
-
-    it 'returns status code 204' do
-      expect(response).to have_http_status(:no_content)
     end
   end
 end

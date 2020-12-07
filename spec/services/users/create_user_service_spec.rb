@@ -29,14 +29,14 @@ RSpec.describe CreateUserService do
       end
 
       context 'when invalid user' do
-        let(:valid_attributes_2) do
+        let(:valid_attributes2) do
           attributes_for(:user)
         end
-        let(:valid_object_2) { described_class.new(valid_attributes_2) }
+        let(:valid_object2) { described_class.new(valid_attributes2) }
 
         it 'is equal' do
           check_user = valid_object.execute
-          new_user = valid_object_2.execute
+          new_user = valid_object2.execute
 
           expect(check_user).not_to eq(new_user)
         end

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Service responsible to authenticate the user and generate a token
 class AuthenticateUserService
   def initialize(email, password)
     @email = email

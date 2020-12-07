@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Service responsible to list the users, except the current one
 class ListUsersService
   def initialize(user)
     @user = user

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
+# User methods - control actions of a user
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show update destroy]
+  before_action :set_user, only: %i[show update]
 
   def index
     @users = ListUsersService.new(@user).execute

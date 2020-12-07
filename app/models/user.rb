@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   has_many :user_tokens, dependent: :destroy
 
-  validates :name, :birthday_date, :email, :password_digest, presence: true
+  validates :name, :birthday_date, :password_digest, presence: true
 
   validates :email, confirmation: true, uniqueness: true
 end

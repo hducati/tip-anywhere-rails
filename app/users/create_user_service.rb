@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Service responsible to create a new user
 class CreateUserService
   def initialize(user_params = {})
     @name = user_params[:name]

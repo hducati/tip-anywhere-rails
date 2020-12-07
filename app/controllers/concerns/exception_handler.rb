@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Exception Handler to deal with custom exceptions
 module ExceptionHandler
   extend ActiveSupport::Concern
 

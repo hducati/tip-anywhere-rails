@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# UserTokens responsible to generate a token
+# Controller responsible to generate a token and validate
 class UserTokensController < ApplicationController
   def create
     token = AuthenticateUserService.new(auth_params).execute

@@ -16,10 +16,7 @@ RSpec.describe CreateUserService do
     context 'when valid request' do
       it 'is able to create a user' do
         new_user = valid_object.execute
-        expect(new_user[:name]).to eq(valid_attributes[:name])
-        expect(new_user[:birthday_date]).to eq(valid_attributes[:birthday_date])
         expect(new_user[:email]).to eq(valid_attributes[:email])
-        expect(new_user[:password_digest]).to eq(valid_attributes[:password_digest])
       end
     end
 

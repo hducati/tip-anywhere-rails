@@ -3,7 +3,7 @@
 # Controller responsible to generate a token and validate
 class UserTokensController < ApplicationController
   def create
-    token = AuthenticateUserService.new(auth_params).execute
+    token = AuthenticateUserService.execute(auth_params)
 
     json_response(token, :created)
   end

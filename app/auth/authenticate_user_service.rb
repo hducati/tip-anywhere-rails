@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 # Service responsible to authenticate the user and generate a token
-class AuthenticateUserService
+class AuthenticateUserService < ApplicationService
+  attr_reader :email, :password
+
   def initialize(email, password)
+    super()
     @email = email
     @password = password
   end
@@ -12,8 +15,6 @@ class AuthenticateUserService
   end
 
   private
-
-  attr_reader :email, :password
 
   # verify user credentials
   def user_credentials

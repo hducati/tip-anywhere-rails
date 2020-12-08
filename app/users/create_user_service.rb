@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-# Service responsible to create a new user
-class CreateUserService
+class CreateUserService < ApplicationService
+  attr_reader :name, :birthday_date, :email, :password_digest
+
   def initialize(user_params = {})
+    super()
     @name = user_params[:name]
     @birthday_date = user_params[:birthday_date]
     @email = user_params[:email]
@@ -12,8 +14,6 @@ class CreateUserService
   def execute
     create_user
   end
-
-  attr_reader :name, :birthday_date, :email, :password_digest
 
   private
 

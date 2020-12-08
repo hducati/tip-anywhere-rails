@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = CreateUserService.new(user_params).execute
+    @user = CreateUserService.execute(user_params)
     json_response(@user, :created)
   end
 

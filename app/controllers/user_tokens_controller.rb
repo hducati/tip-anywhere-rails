@@ -7,7 +7,7 @@ class UserTokensController < ApplicationController
   def create
     auth_token = AuthenticateUserService.new(auth_params[:email], auth_params[:password]).execute
 
-    json_response(auth_token, :created)
+    json_response(auth_token: auth_token)
   end
 
   private

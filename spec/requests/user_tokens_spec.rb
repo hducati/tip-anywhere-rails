@@ -25,7 +25,7 @@ RSpec.describe 'UserTokens', type: :request do
       before { post '/sessions', params: valid_credentials, headers: headers }
 
       it 'returns an authentication token' do
-        expect(json_parse['token']).not_to be_nil
+        expect(json_parse['auth_token']).not_to be_nil
       end
     end
 

@@ -2,6 +2,7 @@
 
 # User methods - control actions of a user
 class UsersController < ApplicationController
+  skip_before_action :authorize_request, only: :create
   before_action :set_user, only: %i[show update]
 
   def index

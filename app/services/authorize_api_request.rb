@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 # Service responsible to validate the user and token
-class AuthorizeApiRequest
+class AuthorizeApiRequest < ApplicationService
   def initialize(headers = {})
+    super()
     @headers = headers
   end
 

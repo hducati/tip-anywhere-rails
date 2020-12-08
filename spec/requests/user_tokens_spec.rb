@@ -25,7 +25,7 @@ RSpec.describe 'UserTokens', type: :request do
       before { post '/sessions', params: valid_credentials, headers: headers }
 
       it 'returns an authentication token' do
-        expect(json['token']).not_to be_nil
+        expect(json_parse['token']).not_to be_nil
       end
     end
 
@@ -33,7 +33,7 @@ RSpec.describe 'UserTokens', type: :request do
       before { post '/sessions', params: invalid_credentials, headers: headers }
 
       it 'returns a failure message' do
-        expect(json['message']).to match(/Invalid credentials/)
+        expect(json_parse['message']).to match(/Invalid credentials/)
       end
     end
   end

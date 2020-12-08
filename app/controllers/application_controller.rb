@@ -11,6 +11,6 @@ class ApplicationController < ActionController::API
   private
 
   def authorize_request
-    @current_user = (AuthorizeApiRequest.execute(request.headers))[:user]
+    @current_user = (AuthorizeApiRequest.new(request.headers).execute)[:user]
   end
 end

@@ -5,9 +5,9 @@ class UserTokensController < ApplicationController
   skip_before_action :authorize_request, only: :create
 
   def create
-    token = AuthenticateUserService.execute(auth_params)
+    auth_token = AuthenticateUserService.new(auth_params[:email], auth_params[:password]).execute
 
-    json_response(token, :created)
+    json_response(auth_token, :created)
   end
 
   private

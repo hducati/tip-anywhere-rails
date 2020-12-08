@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 
   def create
     user = User.create!(user_params)
-    auth_token = AuthenticateUserService.execute(user.email, user.password)
+    auth_token = AuthenticateUserService.new(user.email, user.password).execute
     response = { message: Message.account_created, auth_token: auth_token }
     json_response(response, :created)
   end

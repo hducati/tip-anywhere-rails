@@ -18,11 +18,11 @@ RSpec.describe 'Users API', type: :request do
       end
 
       it 'returns a sucess message' do
-        expect(json['message']).to match(/Account created successfully/)
+        expect(json_parse['message']).to match(/Account created successfully/)
       end
 
       it 'returns a authentication token' do
-        expect(json['auth_token']).not_to be_nil
+        expect(json_parse['auth_token']).not_to be_nil
       end
     end
 
@@ -34,7 +34,7 @@ RSpec.describe 'Users API', type: :request do
       end
 
       it 'returns a failure message' do
-        expect(json['message'])
+        expect(json_parse['message'])
           .to match(/Validation failed:/)
       end
     end

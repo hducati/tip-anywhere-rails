@@ -12,8 +12,8 @@ RSpec.describe AuthenticateUserService do
   describe '#execute' do
     context 'when valid credentials' do
       it 'return an auth token and a user object' do
-        token = valid_auth_obj.execute
-        expect(token).not_to be_nil
+        auth_token = valid_auth_obj.execute
+        expect(auth_token).not_to be_nil
       end
     end
 

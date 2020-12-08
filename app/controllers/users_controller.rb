@@ -5,12 +5,12 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show update]
 
   def index
-    @users = ListUsersService.new(@user).execute
+    @users = User.where.not(@user)
     json_response(@users)
   end
 
   def create
-    @user = CreateUserService.execute(user_params)
+    @user = User.create!(user_params)
     json_response(@user, :created)
   end
 
@@ -31,7 +31,8 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.permit(name, email, birthday_date, password_digest)
+    params.permit(:name, :email, :birthday_date,
+                  :password_digest, :password_digest_confirmation)
   end
 
   def set_user

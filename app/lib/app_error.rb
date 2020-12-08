@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AppError
+class Message
   def self.error_message(message)
     message.to_s
   end

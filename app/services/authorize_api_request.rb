@@ -21,7 +21,7 @@ class AuthorizeApiRequest
   rescue ActiveRecord::RecordNotFound => e
     raise(
       ExceptionHandler::InvalidToken,
-      ("#{AppError.invalid_token} #{e.message}")
+      ("#{Message.invalid_token} #{e.message}")
     )
   end
 
@@ -32,6 +32,6 @@ class AuthorizeApiRequest
   def http_auth_header
     return headers['Authorization'].split(' ').last if headers['Authorization'].present?
 
-    raise(ExceptionHandler::MissingToken, AppError.missing_token)
+    raise(ExceptionHandler::MissingToken, Message.missing_token)
   end
 end

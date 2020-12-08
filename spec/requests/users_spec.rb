@@ -1,111 +1,39 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.describe 'Users API', type: :request do
-  let!(:users) { create_list(:user, 10) }
-  let(:user_id) { users.first.id }
-
-  describe 'GET /users' do
-    before { get '/users' }
-
-    context 'when the request is valid' do
-      it 'returns users' do
-        expect(json_parse).not_to be_empty
-      end
-
-      it 'returns a size' do
-        expect(json_parse.size).to eq(10)
-      end
-
-      it 'return status code 200' do
-        expect(response).to have_http_status(:ok)
-      end
-    end
-  end
-
-  describe 'GET /users/:id' do
-    before { get "/users/#{user_id}" }
-
-    context 'when the record exists' do
-      it 'returns the user' do
-        expect(json_parse['id']).not_to be_empty.and eq(user_id)
-      end
-
-      it 'returns status code 200' do
-        expect(response).to have_http_status(:ok)
-      end
-    end
-
-    context 'when the record does not exist' do
-      let(:user_id) { 100 }
-
-      it 'return status code 404' do
-        expect(response).to have_http_status(:not_found)
-      end
-
-      it 'return a not found message' do
-        expect(response.body).to match(/Couldn't find User/)
-      end
-    end
+  let(:user) { build(:user) }
+  let(:headers) { valid_headers.except('Authorization') }
+  let(:valid_attributes) do
+    attributes_for(:user, password_digest_confirmation: user.password)
   end
 
   describe 'POST /signup' do
-    let(:valid_attributes) do
-      {
-        name: 'Henrique Ducati',
-        birthday_date: '2018-04-04',
-        email: 'henrique@gmail.com',
-        password: '1231232131'
-      }
-    end
-
-    context 'when the request is valid' do
-      before { post '/signup', params: valid_attributes.to_json }
+    context 'when valid request' do
+      before { post '/signup', params: valid_attributes.to_json, headers: headers }
 
       it 'creates a new user' do
-        expect(json_parse).to have_attributes(
-          name: 'Henrique Ducati', birthday_date: '2018-04-04',
-          email: 'henrique@gmail.com', password_digest: '1231232131'
-        )
-      end
-
-      it 'return status code 201' do
         expect(response).to have_http_status(:created)
       end
-    end
 
-    context 'when the request is invalid' do
-      before do
-        post '/users', params: {
-          name: 'Henrique Ducati',
-          email: 'henrique@gmail.com',
-          password: '1231232131'
-        }
+      it 'returns a sucess message' do
+        expect(json['message']).to match(/Account created successfully/)
       end
 
-      it { is_expected.to have_http_status(:unprocessable_entity) }
-
-      it 'returns a validation failure message' do
-        expect(response.body).to match(
-          /Validation failed/
-        )
+      it 'returns a authentication token' do
+        expect(json['auth_token']).not_to be_nil
       end
     end
-  end
 
-  describe 'PUT /users/:id' do
-    let(:valid_attributes) { { name: 'Henrique Ducati' } }
+    context 'when invalid request' do
+      before { post '/signup', params: {}, headers: headers }
 
-    context 'when the record exists' do
-      before { put "/users/#{user_id}", params: valid_attributes }
-
-      it 'updates the record' do
-        expect(response.body).to be_empty
+      it 'does not create a new user' do
+        expect(response).to have_http_status(:unprocessable_entity)
       end
 
-      it 'returns status code 204' do
-        expect(response).to have_http_status(:no_content)
+      it 'returns a failure message' do
+        expect(json['message'])
+          .to match(/Validation failed:/)
       end
     end
   end

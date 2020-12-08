@@ -10,8 +10,10 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.create!(user_params)
-    json_response(@user, :created)
+    user = User.create!(user_params)
+    auth_token = AuthenticateUserService.execute(user.email, user.password)
+    response = { message: Message.account_created, auth_token: auth_token}
+    json_response(response, :created)
   end
 
   def show
@@ -20,11 +22,6 @@ class UsersController < ApplicationController
 
   def update
     @user.update(user_params)
-    head :no_content
-  end
-
-  def destroy
-    @user.destroy
     head :no_content
   end
 

@@ -24,7 +24,7 @@ class AuthenticateUserService < ApplicationService
 
     raise(
       ExceptionHandler::AuthenticationError,
-      AppError.error_message('Wrong password/email combination')
+      Message.error_message('Wrong password/email combination')
     )
   end
 end

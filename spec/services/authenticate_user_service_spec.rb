@@ -22,7 +22,7 @@ RSpec.describe AuthenticateUserService do
         expect { invalid_auth_obj.execute }
           .to raise_error(
             ExceptionHandler::AuthenticationError,
-            Message.error_message('Wrong password/email combination')
+            /Invalid credentials/
           )
       end
     end

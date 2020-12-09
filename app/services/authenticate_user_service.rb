@@ -23,7 +23,7 @@ class AuthenticateUserService
 
     raise(
       ExceptionHandler::AuthenticationError,
-      Message.error_message('Wrong password/email combination')
+      Message.invalid_credentials
     )
   end
 end

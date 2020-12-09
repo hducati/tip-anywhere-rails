@@ -6,5 +6,6 @@ FactoryBot.define do
     birthday_date { Faker::Date.birthday(min_age: 18, max_age: 60) }
     email { 'foo@bar.com' }
     password { 'foobar' }
+    phone_number { '5519971242942' }
   end
 end

@@ -10,11 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_07_144634) do
+ActiveRecord::Schema.define(version: 2020_12_09_131835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "tips", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.float "odd"
+    t.string "sport"
+    t.string "tip"
+    t.string "league"
+    t.string "game"
+    t.float "unit"
+    t.string "description"
+    t.string "status"
+    t.boolean "closed"
+    t.datetime "scheduled_at"
+    t.uuid "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_tips_on_user_id"
+  end
 
   create_table "user_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "token", null: false
@@ -40,5 +57,6 @@ ActiveRecord::Schema.define(version: 2020_12_07_144634) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "tips", "users"
   add_foreign_key "user_tokens", "users"
 end

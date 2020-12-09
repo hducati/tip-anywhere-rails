@@ -6,7 +6,6 @@ require:
   - rubocop-performance
 
 AllCops:
-  DisplayCopNames: true
   Exclude:
     - 'db/**/*'
     - 'lib/**/*'

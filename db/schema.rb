@@ -17,16 +17,16 @@ ActiveRecord::Schema.define(version: 2020_12_09_131835) do
   enable_extension "plpgsql"
 
   create_table "tips", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.float "odd"
+    t.float "odd", null: false
     t.string "sport"
-    t.string "tip"
+    t.string "tip", null: false
     t.string "league"
-    t.string "game"
-    t.float "unit"
+    t.string "game", null: false
+    t.float "unit", null: false
     t.string "description"
-    t.string "status"
-    t.boolean "closed"
-    t.datetime "scheduled_at"
+    t.string "status", null: false
+    t.boolean "closed", default: false
+    t.datetime "scheduled_at", default: -> { "(CURRENT_TIMESTAMP + '01:00:00'::interval hour)" }
     t.uuid "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

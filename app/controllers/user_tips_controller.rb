@@ -3,13 +3,13 @@
 # Controller of actions regarding the Tip model
 class UserTipsController < ApplicationController
   def index
-    @tips = Tip.where.not(user_id: current_user.id)
+    @tips = current_user.tips
     json_response(@tips)
   end
 
   def create
-    tip = current_user.tip.create!(tip_params)
-    json_response(tip, :created)
+    @tip = current_user.tips.create!(tip_params)
+    json_response(@tip, :created)
   end
 
   def show
@@ -17,8 +17,9 @@ class UserTipsController < ApplicationController
   end
 
   def update
-    @tip.update(params.permit(status))
-    json_response(@user, :accepted)
+    current_user.tips(@tip)
+    @tip.update(params.permit(status), closed: true)
+    json_response(@tip, :accepted)
   end
 end
 

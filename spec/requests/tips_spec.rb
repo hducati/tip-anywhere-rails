@@ -51,9 +51,9 @@ describe 'Tips API', type: :request do
   end
 
   describe 'POST /tips' do
-    let(:valid_attributes) { attributes_for(:tip, status: 'Red') }
+    let(:valid_attributes) { attributes_for(:tip, status: 'Red') }.to_json
 
-    context 'when valid request' do
+    context 'when the request is valid' do
       before { post '/tips', params: valid_attributes, headers: headers }
 
       it 'creates a tip' do
@@ -62,6 +62,36 @@ describe 'Tips API', type: :request do
 
       it 'returns a status code 201' do
         expect(response).to have_http_status(:created)
+      end
+    end
+
+    context 'when the request is invalid' do
+      it 'returns a status code 422' do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'returns a failure message' do
+        expect(response.body).to match(/Validation failed/)
+      end
+    end
+  end
+
+  describe 'PUT /tips/:id' do
+    let(:valid_attributes) { { status: 'Green' }.to_json }
+
+    context 'when the request is valid' do
+      before { put "/tips/#{tip_id}", params: valid_attributes, headers: headers }
+
+      it 'updates the record' do
+        expect(json_parse['status']).to eq('Green')
+      end
+
+      it 'updates closed field to true' do
+        expect(json_parse['closed']).to eq(true)
+      end
+
+      it 'returns a status code 202' do
+        expect(response).to have_http_status(:accepted)
       end
     end
   end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Controller of actions regarding the Tip model
-class TipsController < ApplicationController
+class UserTipsController < ApplicationController
   def index
     @tips = Tip.where.not(user_id: current_user.id)
     json_response(@tips)
